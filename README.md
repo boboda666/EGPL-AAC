@@ -11,9 +11,9 @@ The final paper configuration uses ordinary DPO on AudioCaps and ordinary DPO wi
 
 ## Release status
 
-This repository currently contains the method-specific implementation, final hyperparameter records, and reported metric files. It is designed as an overlay for the upstream [SLAM-LLM/SLAM-AAC](https://github.com/X-LANCE/SLAM-LLM) codebase. Dataset manifests, pretrained models, generated preference data, and checkpoints are intentionally excluded.
+This repository contains the method-specific implementation, final hyperparameter records, preference-data schema, LoRA-only training utilities, and reported metric files. It is designed as an overlay for the upstream [SLAM-LLM/SLAM-AAC](https://github.com/X-LANCE/SLAM-LLM) codebase. Dataset manifests, pretrained models, generated preference data, and checkpoints are intentionally excluded.
 
-The end-to-end launch scripts and data-preparation instructions will be added after all machine-specific paths have been removed and the clean-room reproduction commands have been verified.
+The original experiment directory also contains exploratory BEATs, weighting, mention-selector, and graph branches. They are deliberately excluded because they are not part of the reported method. End-to-end launch scripts will be added only after machine-specific paths and upstream-code assumptions have been removed and clean-room reproduction has been verified.
 
 ## Final configurations
 
@@ -29,12 +29,19 @@ Both use an ERA with hidden size 256, kernel size 5, three temporal blocks, 527 
 ```text
 egpl_aac/
   event_adapter.py       # ERA architecture and temporal event residual
+  data.py                # AudioCaps/Clotho preference JSONL normalization
   preference.py          # length-normalized DPO and optional anchor
+  training.py            # causal log-probabilities and LoRA-only freezing
 configs/
   audiocaps_final.yaml
   clotho_final.yaml
 results/
   final_metrics.json
+  analysis_metrics.json
+examples/
+  preference_pair.example.jsonl
+scripts/
+  inspect_preference_data.py
 tests/
   test_core.py
 ```
@@ -42,8 +49,19 @@ tests/
 ## Minimal validation
 
 ```bash
+python -m pip install -e .
 python -m pytest -q
+python scripts/inspect_preference_data.py /private/path/to/preferences.jsonl
 ```
+
+The preference loader accepts both final schemas. Required fields are
+`key`, `source`, `chosen`, and `rejected`; evidence and filtering fields are
+retained as audit metadata. The released example is synthetic and is not an
+item from either training set.
+
+The Clotho anchor exactly matches the final implementation: a linear,
+one-sided hinge on the decrease in chosen-caption mean token log-likelihood,
+with weight `0.01` and tolerance `0.02`. AudioCaps sets its weight to zero.
 
 ## Data and checkpoints
 

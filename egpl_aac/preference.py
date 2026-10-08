@@ -36,7 +36,9 @@ def dpo_loss(
     preference_loss = -F.logsigmoid(logits).mean()
 
     degradation = reference_chosen_logp - chosen_logp - anchor_tolerance
-    anchor_loss = degradation.clamp_min(0).square().mean()
+    # The final Clotho run uses a one-sided *linear* hinge.  It is inactive
+    # while the chosen-caption log-likelihood stays within the tolerance.
+    anchor_loss = degradation.clamp_min(0).mean()
     total = preference_loss + anchor_weight * anchor_loss
     return total, {
         "preference_loss": preference_loss.detach(),

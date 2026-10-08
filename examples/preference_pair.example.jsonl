@@ -1,0 +1,1 @@
+{"key":"example_audio","source":"/path/to/audio.wav","dataset":"audiocaps","chosen":"A dog barks in a park.","rejected":"A person speaks in a park.","pair_type":"unsupported_event"}
