@@ -1,0 +1,37 @@
+# Model weights and training artifacts
+*.pt
+*.pth
+*.ckpt
+*.bin
+*.safetensors
+*.onnx
+*.tar
+*.zip
+
+# Data and local experiment outputs
+data/
+datasets/
+models/
+checkpoints/
+exps/
+outputs/
+wandb/
+logs/
+*.log
+
+# Local configuration and credentials
+.env
+.env.*
+!*example*
+*.key
+*.pem
+
+# Python/editor artifacts
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.idea/
+.vscode/
+.DS_Store

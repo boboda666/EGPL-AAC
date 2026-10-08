@@ -1,0 +1,23 @@
+dataset: AudioCaps
+evaluation_split: official_test_available_970_of_975
+seed: 43
+event_adapter:
+  input_dim: 768
+  hidden_dim: 256
+  num_classes: 527
+  temporal_bins: 64
+  depth: 3
+  kernel_size: 5
+  dropout: 0.1
+  residual_scale: 0.1
+preference:
+  objective: ordinary_dpo
+  pairs: 512
+  beta: 0.05
+  anchor_weight: 0.0
+  learning_rate: 1.0e-6
+  optimizer_updates: 64
+  gradient_accumulation_steps: 8
+decoding:
+  method: beam_search
+  num_beams: 4

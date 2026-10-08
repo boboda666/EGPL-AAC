@@ -1,0 +1,19 @@
+{
+  "scale": "raw metric values; multiply by 100 for paper tables",
+  "AudioCaps_Test970": {
+    "METEOR": 0.2670295641962855,
+    "CIDEr": 0.852379183287514,
+    "SPICE": 0.19742308360214644,
+    "SPIDEr": 0.5249011334448302,
+    "SPIDEr-FL": 0.5224661798175517,
+    "FENSE": 0.6619323794858665
+  },
+  "Clotho_evaluation": {
+    "METEOR": 0.196502,
+    "CIDEr": 0.540173,
+    "SPICE": 0.152131,
+    "SPIDEr": 0.346152,
+    "SPIDEr-FL": 0.344471,
+    "FENSE": 0.536633
+  }
+}
